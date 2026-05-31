@@ -14,9 +14,15 @@ export async function POST(request: Request) {
     const GMAIL_USER = process.env.GMAIL_USER; // e.g. lorenzo.ebraico@gmail.com
     const GMAIL_PASS = process.env.GMAIL_PASS; // app password or OAuth2 token
 
+    // If credentials are missing, operate in MOCK mode for local development.
     if (!GMAIL_USER || !GMAIL_PASS) {
-      console.error('[Contact API] Missing GMAIL credentials in environment');
-      return NextResponse.json({ success: false, error: 'Mailer not configured' }, { status: 500 });
+      console.log('⚠️ [MOCK MODE] GMAIL credentials missing — simulating send');
+      console.log(`Mock send -> from: ${email}, name: ${name}, message: ${message}`);
+
+      // Simulate network latency so UX feels realistic
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      return NextResponse.json({ success: true, message: 'Messaggio inviato con successo (Modalità Demo)!', mocked: true });
     }
 
     const transporter = nodemailer.createTransport({
@@ -42,7 +48,7 @@ export async function POST(request: Request) {
     const result = await transporter.sendMail(mailOptions);
     console.log('[Contact API] Email sent', result.messageId);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: 'Messaggio inviato con successo!' });
   } catch (err) {
     console.error('[Contact API] Error handling request', err);
     return NextResponse.json({ success: false, error: 'Server error' }, { status: 500 });

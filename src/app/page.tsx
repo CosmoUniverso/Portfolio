@@ -15,6 +15,7 @@ export default function Home() {
 
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitResponse, setSubmitResponse] = useState<{ message?: string; mocked?: boolean; name?: string; email?: string } | null>(null);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -33,10 +34,12 @@ export default function Home() {
 
         const data = await res.json();
         if (res.ok && data.success) {
+          setSubmitResponse({ message: data.message, mocked: data.mocked, name: formState.name, email: formState.email });
           setIsSubmitted(true);
           setTimeout(() => {
             setIsSubmitted(false);
             setFormState({ name: "", email: "", message: "" });
+            setSubmitResponse(null);
           }, 4000);
         } else {
           alert('Invio fallito: ' + (data.error || 'errore sconosciuto'));
@@ -397,8 +400,15 @@ export default function Home() {
                     </div>
                     <h4 className="success-title">Messaggio Inviato!</h4>
                     <p className="success-desc">
-                      Grazie per avermi contattato, {formState.name}. Ti risponderò all'indirizzo {formState.email} il prima possibile!
+                      {submitResponse?.message
+                        ? submitResponse.message
+                        : `Grazie per avermi contattato, ${submitResponse?.name || formState.name}. Ti risponderò all'indirizzo ${submitResponse?.email || formState.email} il prima possibile!`}
                     </p>
+                    {submitResponse?.mocked && (
+                      <small style={{ color: 'var(--text-secondary)', display: 'block', marginTop: 6 }}>
+                        (Invio simulato — modalità demo locale)
+                      </small>
+                    )}
                   </motion.div>
                 ) : (
                   <form onSubmit={handleFormSubmit} className="contact-form">
