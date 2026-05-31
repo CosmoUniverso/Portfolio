@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Home, Code, Cpu, Film, Mail, Sun, Moon, ArrowRight, CornerDownLeft } from "lucide-react";
+import { Search, Home, Code, Cpu, Shield, Mail, Sun, Moon, ArrowRight, CornerDownLeft } from "lucide-react";
 
 interface CommandItem {
   id: string;
@@ -61,20 +61,20 @@ export default function CommandMenu({ isOpen, onClose, toggleTheme, currentTheme
       shortcut: "C",
     },
     {
-      id: "nav-ai-coding",
-      label: "Naviga a: AI-Coding",
+      id: "nav-ai-systems",
+      label: "Naviga a: AI Systems",
       category: "Navigazione",
       icon: <Cpu className="w-4 h-4" />,
-      action: () => handleNavClick("ai-coding"),
+      action: () => handleNavClick("ai-systems"),
       shortcut: "A",
     },
     {
-      id: "nav-photo-video",
-      label: "Naviga a: Photo & Video",
+      id: "nav-cybersecurity",
+      label: "Naviga a: Cybersecurity",
       category: "Navigazione",
-      icon: <Film className="w-4 h-4" />,
-      action: () => handleNavClick("photo-video"),
-      shortcut: "P",
+      icon: <Shield className="w-4 h-4" />,
+      action: () => handleNavClick("cybersecurity"),
+      shortcut: "S",
     },
     {
       id: "nav-contact",

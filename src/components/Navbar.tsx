@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Code, Cpu, Film, Home, Menu, X, Sun, Moon, Search } from "lucide-react";
+import { Code, Cpu, Shield, Home, Menu, X, Sun, Moon, Search } from "lucide-react";
 import CommandMenu from "./CommandMenu";
 
 interface NavItem {
@@ -66,8 +66,8 @@ export default function Navbar() {
   const navItems: NavItem[] = [
     { label: "Home", targetId: "home", icon: <Home className="w-4 h-4" /> },
     { label: "Coding", targetId: "coding", icon: <Code className="w-4 h-4" /> },
-    { label: "AI-Coding", targetId: "ai-coding", icon: <Cpu className="w-4 h-4" /> },
-    { label: "Photo & Video", targetId: "photo-video", icon: <Film className="w-4 h-4" /> },
+    { label: "AI Systems", targetId: "ai-systems", icon: <Cpu className="w-4 h-4" /> },
+    { label: "Cybersecurity", targetId: "cybersecurity", icon: <Shield className="w-4 h-4" /> },
   ];
 
   // Rileva lo scorrimento per aggiungere un'ombra o un effetto più marcato alla navbar
@@ -102,7 +102,7 @@ export default function Navbar() {
     const observer = new IntersectionObserver(handleIntersection, observerOptions);
 
     // Osserva le sezioni
-    const sections = ["home", "coding", "ai-coding", "photo-video"];
+    const sections = ["home", "coding", "ai-systems", "cybersecurity"];
     sections.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
@@ -138,8 +138,8 @@ export default function Navbar() {
     <header className={`navbar-wrapper ${scrolled ? "navbar-scrolled" : ""}`}>
       <div className="navbar-container container glass-panel">
         <a href="#home" onClick={(e) => handleNavClick(e, "home")} className="navbar-logo">
-          <span className="logo-initial">M</span>
-          <span className="logo-text">Manuel<span className="accent-dot">.</span></span>
+          <span className="logo-initial">L</span>
+          <span className="logo-text">Lorenzo<span className="accent-dot">.</span></span>
         </a>
 
         {/* Menu di Navigazione Desktop */}

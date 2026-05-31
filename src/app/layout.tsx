@@ -15,10 +15,10 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Manuel Portfolio | Software Developer, AI Integration & Media Editor",
-  description: "Esplora i miei progetti e competenze nelle aree dello sviluppo software (Coding), dell'integrazione guidata da Intelligenza Artificiale (AI-Coding) e della post-produzione audiovisiva (Photo & Video Editing). Scopri il mio percorso professionale ed i miei strumenti preferiti.",
-  keywords: ["Software Developer", "AI Developer", "AI Coding", "Video Editor", "Premiere Pro", "Next.js Portfolio", "React Developer", "DaVinci Resolve", "Full Stack Developer"],
-  authors: [{ name: "Manuel" }],
+  title: "Lorenzo Ebraico | Software Developer, AI Systems & Cybersecurity",
+  description: "Esplora i miei progetti e competenze nelle aree dello sviluppo software, dei sistemi AI distribuiti e della cybersecurity. Scopri il mio percorso professionale e gli strumenti che uso ogni giorno.",
+  keywords: ["Software Developer", "AI Systems", "Cybersecurity", "Next.js Portfolio", "React Developer", "TypeScript", "Node.js", "Backend Developer", "Full Stack Developer"],
+  authors: [{ name: "Lorenzo Ebraico" }],
   robots: "index, follow",
 };
 

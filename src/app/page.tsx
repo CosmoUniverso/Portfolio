@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Cpu, Film, Mail, Sparkles, Terminal, Send, Check } from "lucide-react";
+import { ArrowRight, Code, Cpu, Film, Mail, Send, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Carousel from "@/components/Carousel";
 import SoftwareGrid from "@/components/SoftwareGrid";
@@ -10,8 +10,8 @@ import { portfolioData } from "@/data/portfolioData";
 
 export default function Home() {
   const codingData = portfolioData.find((s) => s.id === "coding")!;
-  const aiCodingData = portfolioData.find((s) => s.id === "ai-coding")!;
-  const photoVideoData = portfolioData.find((s) => s.id === "photo-video")!;
+  const aiSystemsData = portfolioData.find((s) => s.id === "ai-systems");
+  const cybersecurityData = portfolioData.find((s) => s.id === "cybersecurity");
 
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -22,13 +22,32 @@ export default function Home() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formState.name && formState.email && formState.message) {
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormState({ name: "", email: "", message: "" });
-      }, 5000);
-    }
+    const send = async () => {
+      if (!(formState.name && formState.email && formState.message)) return;
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formState),
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          setIsSubmitted(true);
+          setTimeout(() => {
+            setIsSubmitted(false);
+            setFormState({ name: "", email: "", message: "" });
+          }, 4000);
+        } else {
+          alert('Invio fallito: ' + (data.error || 'errore sconosciuto'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Errore di rete durante l\'invio del messaggio.');
+      }
+    };
+
+    send();
   };
 
   const handleExploreClick = (e: React.MouseEvent, targetId: string) => {
@@ -48,6 +67,65 @@ export default function Home() {
     }
   };
 
+  if (!aiSystemsData || !cybersecurityData) {
+    return (
+      <div className="portfolio-app portfolio-error-state">
+        <div className="container portfolio-error-card">
+          <p className="portfolio-error-eyebrow">Configurazione mancante</p>
+          <h1 className="portfolio-error-title">Sezioni portfolio non trovate</h1>
+          <p className="portfolio-error-text">
+            La pagina si aspetta le sezioni con id "ai-systems" e "cybersecurity" in portfolioData.ts. Controlla i
+            dati prima di continuare.
+          </p>
+        </div>
+
+        <style jsx global>{`
+          .portfolio-error-state {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: var(--hero-bg-gradient);
+          }
+
+          .portfolio-error-card {
+            max-width: 720px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            background: rgba(10, 10, 10, 0.72);
+            box-shadow: var(--glass-shadow);
+            text-align: center;
+          }
+
+          .portfolio-error-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+          }
+
+          .portfolio-error-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+          }
+
+          .portfolio-error-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="portfolio-app">
       {/* Barra di Navigazione Flottante */}
@@ -66,7 +144,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
             className="hero-title"
           >
-            Costruisco il <span className="text-gradient-accent">Futuro Digitale</span> combinando Codice, IA e Design
+            Costruisco <span className="text-gradient-accent">Sistemi Sicuri e Scalabili</span> combinando Codice, IA e Cybersecurity
           </motion.h1>
 
           <motion.p
@@ -75,9 +153,8 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
             className="hero-subtitle"
           >
-            Esplora il mio percorso professionale attraverso soluzioni di sviluppo web d'eccellenza, 
-            integrazioni avanzate con intelligenza artificiale generativa e produzioni audiovisive 
-            di impatto cinematografico.
+            Esplora il mio percorso professionale attraverso soluzioni backend sicure, integrazioni AI 
+            e infrastrutture resilienti.
           </motion.p>
 
           <motion.div
@@ -90,7 +167,7 @@ export default function Home() {
               <span>Esplora i Progetti</span>
               <ArrowRight className="w-4 h-4" />
             </a>
-            <a href="mailto:manuelprati08@gmail.com" className="btn btn-secondary">
+            <a href="mailto:lorenzo.ebraico@gmail.com" className="btn btn-secondary">
               <Mail className="w-4 h-4" />
               <span>Contattami</span>
             </a>
@@ -103,12 +180,12 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.6 }}
             className="hero-social-links"
           >
-            <a href="https://github.com/MPSup3r" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Profilo GitHub">
+            <a href="https://github.com/CosmoUniverso" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Profilo GitHub">
               <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
               </svg>
             </a>
-            <a href="https://www.linkedin.com/in/manuel-prati-3585613b2" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Profilo LinkedIn">
+            <a href="https://www.linkedin.com/in/lorenzo-ebraico-bb85933b2/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Profilo LinkedIn">
               <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                  <rect x="2" y="9" width="4" height="12"></rect>
@@ -163,8 +240,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sezione 2: AI-CODING */}
-      <section id="ai-coding" className="section ai-coding-section">
+      {/* Sezione 2: AI & DISTRIBUTED SYSTEMS */}
+      <section id="ai-systems" className="section ai-systems-section">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 45 }}
@@ -174,16 +251,16 @@ export default function Home() {
             className="section-header-block"
           >
             <div className="section-header-left">
-              <div className="section-pre-title" style={{ color: aiCodingData.accentColor }}>
+              <div className="section-pre-title" style={{ color: aiSystemsData.accentColor }}>
                 <Cpu className="w-4 h-4" />
-                <span>02. {aiCodingData.title.toUpperCase()}</span>
+                <span>02. {aiSystemsData.title.toUpperCase()}</span>
               </div>
-              <h2 className="section-title">{aiCodingData.subtitle}</h2>
+              <h2 className="section-title">{aiSystemsData.subtitle}</h2>
             </div>
-            <p className="section-description-text">{aiCodingData.description}</p>
+            <p className="section-description-text">{aiSystemsData.description}</p>
           </motion.div>
 
-          {/* Carosello Progetti AI-Coding */}
+          {/* Carosello Progetti AI Systems */}
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -191,10 +268,10 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="section-content-carousel"
           >
-            <Carousel projects={aiCodingData.projects} />
+            <Carousel projects={aiSystemsData.projects} />
           </motion.div>
 
-          {/* Griglia Software AI-Coding */}
+          {/* Griglia Software AI Systems */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -202,13 +279,13 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="section-content-software"
           >
-            <SoftwareGrid softwareList={aiCodingData.software} accentColor={aiCodingData.accentColor} />
+            <SoftwareGrid softwareList={aiSystemsData.software} accentColor={aiSystemsData.accentColor} />
           </motion.div>
         </div>
       </section>
 
-      {/* Sezione 3: EDITING (COMING SOON) */}
-      <section id="photo-video" className="section photo-video-section">
+      {/* Sezione 3: CYBERSECURITY & EMBEDDED SYSTEMS */}
+      <section id="cybersecurity" className="section cybersecurity-section">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 45 }}
@@ -218,14 +295,14 @@ export default function Home() {
             className="section-header-block"
           >
             <div className="section-header-left">
-              <div className="section-pre-title" style={{ color: "#fbbf24" }}>
+              <div className="section-pre-title" style={{ color: cybersecurityData.accentColor }}>
                 <Film className="w-4 h-4" />
-                <span>03. EDITING & PRODUZIONE CREATIVA</span>
+                <span>03. {cybersecurityData.title.toUpperCase()}</span>
               </div>
-              <h2 className="section-title">Coming Soon</h2>
+              <h2 className="section-title">{cybersecurityData.subtitle}</h2>
             </div>
             <p className="section-description-text">
-              Nuovi contenuti in fase di elaborazione. Sto selezionando e ottimizzando le mie migliori produzioni multimediali per presentarle in una veste professionale.
+              {cybersecurityData.description}
             </p>
           </motion.div>
 
@@ -236,23 +313,17 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="coming-soon-card glass-panel"
           >
-            <div className="coming-soon-content">
-              <div className="coming-soon-glow-icon">
-                <Sparkles className="w-10 h-10 yellow-pulse-icon" />
-              </div>
-              <h3 className="coming-soon-title-main">Sezione Multimediale in Arrivo</h3>
-              <p className="coming-soon-desc">
-                Il montaggio di questa sezione è attualmente nella timeline di post-produzione. 
-                Presto potrai esplorare i miei lavori di color grading cinematografico, 
-                motion graphics animate e montaggio video professionale.
-              </p>
-              <div className="coming-soon-timeline">
-                <div className="timeline-progress-bar">
-                  <div className="timeline-progress-fill" />
-                </div>
-                <span className="timeline-status">Rendering in corso... 85%</span>
-              </div>
-            </div>
+            <Carousel projects={cybersecurityData.projects} />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="section-content-software"
+          >
+            <SoftwareGrid softwareList={cybersecurityData.software} accentColor={cybersecurityData.accentColor} />
           </motion.div>
         </div>
       </section>
@@ -274,7 +345,7 @@ export default function Home() {
               </div>
               <h2 className="section-title">Lavoriamo Insieme</h2>
             </div>
-            <p className="section-description-text">{isSubmitted ? "Grazie per avermi scritto!" : "Hai un'idea da realizzare, un progetto da sviluppare o hai bisogno di una consulenza multimediale? Scrivimi!"}</p>
+            <p className="section-description-text">{isSubmitted ? "Grazie per avermi scritto!" : "Hai un'idea da realizzare, un progetto da sviluppare o vuoi collaborare su sistemi, AI o sicurezza? Scrivimi!"}</p>
           </motion.div>
 
           <motion.div
@@ -297,7 +368,7 @@ export default function Home() {
                     <Mail className="w-5 h-5 contact-icon" />
                     <div>
                       <span className="detail-label">Email</span>
-                      <a href="mailto:manuelprati08@gmail.com" className="detail-value">manuelprati08@gmail.com</a>
+                      <a href="mailto:lorenzo.ebraico@gmail.com" className="detail-value">lorenzo.ebraico@gmail.com</a>
                     </div>
                   </div>
                   <div className="contact-detail-card">
@@ -307,7 +378,7 @@ export default function Home() {
                     </svg>
                     <div>
                       <span className="detail-label">Posizione</span>
-                      <span className="detail-value">Casorate Primo (PV), Italia</span>
+                      <span className="detail-value">Milano, Italia</span>
                     </div>
                   </div>
                 </div>
@@ -389,18 +460,18 @@ export default function Home() {
       <footer className="footer-block">
         <div className="container footer-container">
           <div className="footer-logo">
-            <span className="logo-initial">M</span>
-            <span className="logo-text">Manuel<span className="accent-dot">.</span></span>
+            <span className="logo-initial">L</span>
+            <span className="logo-text">Lorenzo<span className="accent-dot">.</span></span>
           </div>
           <p className="footer-motto">
-            Sviluppato integrando ingegneria del software, intelligenza artificiale generativa e design digitale.
+            Sviluppato integrando ingegneria del software, intelligenza artificiale generativa e cybersecurity.
           </p>
           <div className="footer-divider" />
           <div className="footer-bottom-row">
-            <span className="footer-copy">© 2026 Manuel. Tutti i diritti riservati.</span>
+            <span className="footer-copy">© 2026 Lorenzo. Tutti i diritti riservati.</span>
             <div className="footer-socials">
-              <a href="https://github.com/MPSup3r" target="_blank" rel="noopener noreferrer" className="footer-social-link">GitHub</a>
-              <a href="https://www.linkedin.com/in/manuel-prati-3585613b2" target="_blank" rel="noopener noreferrer" className="footer-social-link">LinkedIn</a>
+              <a href="https://github.com/CosmoUniverso" target="_blank" rel="noopener noreferrer" className="footer-social-link">GitHub</a>
+              <a href="https://www.linkedin.com/in/lorenzo-ebraico-bb85933b2/" target="_blank" rel="noopener noreferrer" className="footer-social-link">LinkedIn</a>
             </div>
           </div>
         </div>
@@ -535,11 +606,11 @@ export default function Home() {
           background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 60%);
         }
 
-        .ai-coding-section {
+        .ai-systems-section {
           background: radial-gradient(circle at 90% 40%, rgba(6, 182, 212, 0.03) 0%, transparent 60%);
         }
 
-        .photo-video-section {
+        .cybersecurity-section {
           background: radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.03) 0%, transparent 60%);
         }
 
