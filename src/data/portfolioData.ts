@@ -35,6 +35,15 @@ export interface Software {
   iconName: "code" | "git" | "terminal" | "layers" | "cpu" | "sparkles" | "brain" | "film" | "camera" | "scissors" | "database" | "tv" | "search";
 }
 
+export interface Certification {
+  title: string;
+  issuer: string;
+  year: string;
+  status: string;
+  description: string;
+  fileUrl?: string;
+}
+
 export interface SectionData {
   id: string;
   title: string;
@@ -44,6 +53,7 @@ export interface SectionData {
   highlightColor: string;
   projects: Project[];
   software: Software[];
+  certifications?: Certification[];
 }
 
 export const portfolioData: SectionData[] = [
@@ -119,7 +129,8 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "sparkles",
         accentColor: "#10b981",
-        projectUrl: "https://albero-project.vercel.app/"
+        projectUrl: "https://albero-project.vercel.app/",
+        imageUrl: "/vivo_dashboard.png"
       },
       {
         id: "ai-2",
@@ -135,7 +146,8 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "cpu",
         accentColor: "#fb923c",
-        projectUrl: "https://autostoker.com"
+        projectUrl: "https://autostoker.com",
+        imageUrl: "/AutostokerHome.png"
       },
       {
         id: "ai-3",
@@ -154,20 +166,22 @@ export const portfolioData: SectionData[] = [
         projectUrl: "https://github.com/CosmoUniverso/TreeSite4BInfoBackend"
       },
       {
-        id: "ai-4",
-        title: "Local LLM Experiments",
-        subtitle: "Ricerca su modelli locali",
-        description: "Sperimentazione di LLM locali e automazione intelligente.",
-        details: [
-          "LLM locali su hardware consumer",
-          "Pipeline di automazione",
-          "Orchestrazione modelli AI"
-        ],
-        techStack: ["Python", "LLM", "Ollama", "AI Agents"],
-        year: "2026",
-        iconName: "brain",
-        accentColor: "#f59e0b"
-      }
+      id: "ai-4",
+      title: "Lezioni di AI",
+      subtitle: "Workshop e Didattica su LLMs & Prompt Engineering",
+      description:
+        "Progettazione e conduzione di sessioni di peer‑tutoring mirate a diffondere l'uso responsabile ed efficiente dell'Intelligenza Artificiale Generativa nello sviluppo di codice e nell'automazione di flussi logici complessi.",
+      details: [
+        "Didattica incentrata sui principi del Prompt Engineering, uso efficiente del contesto di sistema e logiche di interazione con LLM commerciali ed open source.",
+        "Workshop interattivi sull'utilizzo di Cursor AI e prompt guidati per flussi accelerati di programmazione, auditing di bug e refactoring automatico.",
+        "Insegnamento di strategie concrete per integrare in sicurezza le API di Claude e Gemini nello sviluppo di applicativi moderni."
+      ],
+      techStack: ["Cursor AI", "LLMs (Gemini / Claude)", "Prompt Engineering", "Didattica & Tutoring"],
+      year: "2026",
+      iconName: "brain",
+      accentColor: "#f59e0b"
+    }
+
     ],
     software: [
       { name: "Python", category: "AI", proficiency: "S", iconName: "code" },
@@ -241,6 +255,49 @@ export const portfolioData: SectionData[] = [
       { name: "Wireshark", category: "Network Analysis", proficiency: "B", iconName: "search" },
       { name: "ESP32", category: "Embedded", proficiency: "B", iconName: "cpu" },
       { name: "TCP/IP", category: "Networking", proficiency: "B", iconName: "cpu" }
+    ]
+  },
+  {
+    id: "certifications",
+    title: "Certifications",
+    subtitle: "Attestati, badge e percorsi in aggiornamento",
+    description: "Spazio dedicato alle certificazioni tecniche e ai percorsi di formazione completati o in corso.",
+    accentColor: "var(--accent-cyan)",
+    highlightColor: "var(--highlight-yellow)",
+    projects: [],
+    software: [],
+    certifications: [
+      {
+        title: "IT Essentials",
+        issuer: "Cisco Networking Academy",
+        year: "2026",
+        status: "Completato",
+        description: "Fondamenti di hardware, software, reti e procedure base di troubleshooting.",
+        fileUrl: "/IT_Essential.jpeg"
+      },
+      {
+        title: "HackersGenAI",
+        issuer: "HackersGenAI",
+        year: "2025",
+        status: "Completato",
+        description: "Percorso focalizzato su sicurezza, AI generativa e utilizzo pratico di strumenti moderni.",
+        fileUrl: "/HackersGenAI.pdf"
+      },
+      {
+        title: "ICDL Base",
+        issuer: "ICDL Foundation",
+        year: "2025",
+        status: "Completato",
+        description: "Certificazione delle competenze digitali di base su elaborazione testi, fogli di calcolo, presentazioni e navigazione sicura.",
+        fileUrl: "/ICDL_Certificato%20ICDL%20Base_2531334.pdf"
+      },
+      {
+        title: "English B2",
+        issuer: "Lingua inglese",
+        year: "2026",
+        status: "In corso",
+        description: "Percorso di consolidamento per portare la certificazione di inglese al livello B2."
+      }
     ]
   }
 ];

@@ -152,6 +152,7 @@ export default function SoftwareGrid({ softwareList, accentColor }: SoftwareGrid
           transform: translateY(var(--tier-lift, 0px));
           border-color: var(--tier-border, var(--glass-border)) !important;
           backdrop-filter: saturate(1.05) blur(14px);
+          isolation: isolate;
         }
 
         .software-card::before {
@@ -222,6 +223,7 @@ export default function SoftwareGrid({ softwareList, accentColor }: SoftwareGrid
           letter-spacing: -0.2px;
           filter: saturate(1.14) contrast(1.05);
           text-shadow: var(--tier-name-glow-light, none);
+          -webkit-text-fill-color: currentColor;
         }
 
         .tool-category {
@@ -241,6 +243,10 @@ export default function SoftwareGrid({ softwareList, accentColor }: SoftwareGrid
 
         .software-card.tier-a .tool-name { letter-spacing: -0.35px; }
         .software-card.tier-s .tool-name { letter-spacing: -0.6px; }
+        .software-card.tier-s .tool-name {
+          -webkit-text-fill-color: currentColor;
+          text-shadow: var(--tier-name-glow-light, none), 0 0 1px rgba(255, 255, 255, 0.12);
+        }
 
         .software-card.tier-a .software-icon-wrapper { box-shadow: 0 0 0 1px var(--tier-border), 0 0 18px -8px var(--tier-glow); }
         .software-card.tier-s .software-icon-wrapper { transform: scale(1.08); box-shadow: 0 8px 30px -10px var(--tier-glow), 0 0 26px -12px var(--tier-glow); }

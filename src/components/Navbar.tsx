@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Code, Cpu, Shield, Home, Menu, X, Sun, Moon, Search } from "lucide-react";
+import { Code, Cpu, Shield, Award, Home, Menu, X, Sun, Moon, Search } from "lucide-react";
 import CommandMenu from "./CommandMenu";
 
 interface NavItem {
@@ -68,6 +68,7 @@ export default function Navbar() {
     { label: "Coding", targetId: "coding", icon: <Code className="w-4 h-4" /> },
     { label: "AI Systems", targetId: "ai-systems", icon: <Cpu className="w-4 h-4" /> },
     { label: "Cybersecurity", targetId: "cybersecurity", icon: <Shield className="w-4 h-4" /> },
+    { label: "Certifications", targetId: "certifications", icon: <Award className="w-4 h-4" /> },
   ];
 
   // Rileva lo scorrimento per aggiungere un'ombra o un effetto più marcato alla navbar
@@ -102,7 +103,7 @@ export default function Navbar() {
     const observer = new IntersectionObserver(handleIntersection, observerOptions);
 
     // Osserva le sezioni
-    const sections = ["home", "coding", "ai-systems", "cybersecurity"];
+    const sections = ["home", "coding", "ai-systems", "cybersecurity", "certifications"];
     sections.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);

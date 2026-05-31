@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Home, Code, Cpu, Shield, Mail, Sun, Moon, ArrowRight, CornerDownLeft } from "lucide-react";
+import { Search, Home, Code, Cpu, Shield, Award, Mail, Sun, Moon, ArrowRight, CornerDownLeft } from "lucide-react";
 
 interface CommandItem {
   id: string;
@@ -75,6 +75,14 @@ export default function CommandMenu({ isOpen, onClose, toggleTheme, currentTheme
       icon: <Shield className="w-4 h-4" />,
       action: () => handleNavClick("cybersecurity"),
       shortcut: "S",
+    },
+    {
+      id: "nav-certifications",
+      label: "Naviga a: Certifications",
+      category: "Navigazione",
+      icon: <Award className="w-4 h-4" />,
+      action: () => handleNavClick("certifications"),
+      shortcut: "P",
     },
     {
       id: "nav-contact",

@@ -2,20 +2,23 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Cpu, Film, Mail, Send, Check } from "lucide-react";
+import { ArrowRight, Award, Code, Cpu, Shield, Mail, Send, Check, RefreshCw, Eye, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Carousel from "@/components/Carousel";
 import SoftwareGrid from "@/components/SoftwareGrid";
-import { portfolioData } from "@/data/portfolioData";
+import CertificationPreview from "@/components/CertificationPreview";
+import { portfolioData, Certification } from "@/data/portfolioData";
 
 export default function Home() {
   const codingData = portfolioData.find((s) => s.id === "coding")!;
   const aiSystemsData = portfolioData.find((s) => s.id === "ai-systems");
   const cybersecurityData = portfolioData.find((s) => s.id === "cybersecurity");
+  const certificationsData = portfolioData.find((s) => s.id === "certifications");
 
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitResponse, setSubmitResponse] = useState<{ message?: string; mocked?: boolean; name?: string; email?: string } | null>(null);
+  const [activeCertification, setActiveCertification] = useState<Certification | null>(null);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -70,15 +73,35 @@ export default function Home() {
     }
   };
 
-  if (!aiSystemsData || !cybersecurityData) {
+  const openCertification = (certification: Certification) => {
+    if (!certification.fileUrl) return;
+    setActiveCertification(certification);
+  };
+
+  const getCertificationPreviewUrl = (certification: Certification) => {
+    const params = new URLSearchParams({
+      file: certification.fileUrl || "",
+      title: certification.title,
+      issuer: certification.issuer,
+      year: certification.year,
+    });
+
+    return `/certifications/preview?${params.toString()}`;
+  };
+
+  const closeCertification = () => {
+    setActiveCertification(null);
+  };
+
+  if (!aiSystemsData || !cybersecurityData || !certificationsData) {
     return (
       <div className="portfolio-app portfolio-error-state">
         <div className="container portfolio-error-card">
           <p className="portfolio-error-eyebrow">Configurazione mancante</p>
           <h1 className="portfolio-error-title">Sezioni portfolio non trovate</h1>
           <p className="portfolio-error-text">
-            La pagina si aspetta le sezioni con id "ai-systems" e "cybersecurity" in portfolioData.ts. Controlla i
-            dati prima di continuare.
+            La pagina si aspetta le sezioni con id "ai-systems", "cybersecurity" e "certifications" in portfolioData.ts.
+            Controlla i dati prima di continuare.
           </p>
         </div>
 
@@ -299,7 +322,7 @@ export default function Home() {
           >
             <div className="section-header-left">
               <div className="section-pre-title" style={{ color: cybersecurityData.accentColor }}>
-                <Film className="w-4 h-4" />
+                <Shield className="w-4 h-4" />
                 <span>03. {cybersecurityData.title.toUpperCase()}</span>
               </div>
               <h2 className="section-title">{cybersecurityData.subtitle}</h2>
@@ -331,6 +354,86 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Sezione 4: CERTIFICATIONS */}
+      <section id="certifications" className="section certifications-section">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="section-header-block"
+          >
+            <div className="section-header-left">
+              <div className="section-pre-title" style={{ color: certificationsData.accentColor }}>
+                <Award className="w-4 h-4" />
+                <span>04. {certificationsData.title.toUpperCase()}</span>
+              </div>
+              <h2 className="section-title">{certificationsData.subtitle}</h2>
+            </div>
+            <p className="section-description-text">{certificationsData.description}</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="certifications-grid"
+          >
+            {certificationsData.certifications && certificationsData.certifications.length > 0 ? (
+              certificationsData.certifications.map((certification, idx) => (
+                <article key={idx} className="certification-card glass-panel">
+                  <div className="certification-card-top">
+                    <div
+                      className="certification-icon-wrap"
+                      style={{ backgroundColor: certification.status === "In corso" ? "rgba(245, 158, 11, 0.12)" : `${certificationsData.accentColor}14`, color: certification.status === "In corso" ? "#f59e0b" : certificationsData.accentColor }}
+                    >
+                      {certification.status === "In corso" ? <RefreshCw className="w-4 h-4" /> : <Check className="w-4 h-4" />}
+                    </div>
+                    {certification.fileUrl ? (
+                      <button
+                        type="button"
+                        className="certification-view-badge"
+                        onClick={() => openCertification(certification)}
+                        aria-label={`Visualizza certificazione ${certification.title}`}
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Visualizza certificazione</span>
+                      </button>
+                    ) : (
+                      <span
+                        className="certification-status"
+                        style={{
+                          color: certification.status === "In corso" ? "#b45309" : "var(--accent-cyan)",
+                          background: certification.status === "In corso" ? "rgba(245, 158, 11, 0.1)" : "rgba(6, 182, 212, 0.08)",
+                          borderColor: certification.status === "In corso" ? "rgba(245, 158, 11, 0.18)" : "rgba(6, 182, 212, 0.18)",
+                        }}
+                      >
+                        {certification.status}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="certification-title">{certification.title}</h3>
+                  <p className="certification-meta">
+                    {certification.issuer} · {certification.year}
+                  </p>
+                  <p className="certification-description">{certification.description}</p>
+                </article>
+              ))
+            ) : (
+              <div className="certification-empty glass-panel">
+                <h3 className="certification-empty-title">Sezione pronta per le certificazioni</h3>
+                <p className="certification-empty-text">
+                  Aggiungi qui badge, attestati o certificazioni ufficiali non appena vuoi popolare questa parte del portfolio.
+                </p>
+              </div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Sezione CONTATTI */}
       <section id="contact" className="section contact-section">
         <div className="container">
@@ -344,7 +447,7 @@ export default function Home() {
             <div className="section-header-left">
               <div className="section-pre-title" style={{ color: "var(--accent-blue)" }}>
                 <Mail className="w-4 h-4" />
-                <span>04. CONTATTI</span>
+                <span>05. CONTATTI</span>
               </div>
               <h2 className="section-title">Lavoriamo Insieme</h2>
             </div>
@@ -465,6 +568,65 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {activeCertification && (
+        <div className="certification-modal-backdrop" role="presentation" onClick={closeCertification}>
+          <motion.div
+            initial={{ opacity: 0, y: 18, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 18, scale: 0.98 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="certification-modal glass-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Anteprima certificazione ${activeCertification.title}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="certification-modal-header">
+              <div>
+                <p className="certification-modal-eyebrow">Certificazione</p>
+                <h3 className="certification-modal-title">{activeCertification.title}</h3>
+                <p className="certification-modal-meta">
+                  {activeCertification.issuer} · {activeCertification.year}
+                </p>
+              </div>
+              <button type="button" className="certification-modal-close" onClick={closeCertification} aria-label="Chiudi anteprima certificazione">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {activeCertification.fileUrl ? (
+              <div className="certification-preview-frame">
+                <CertificationPreview fileUrl={activeCertification.fileUrl} title={activeCertification.title} />
+              </div>
+            ) : (
+              <div className="certification-preview-empty">
+                <p>Questa certificazione è ancora in corso e non ha un allegato disponibile.</p>
+              </div>
+            )}
+
+            {activeCertification.fileUrl && (
+              <div className="certification-modal-actions">
+                <a
+                  href={getCertificationPreviewUrl(activeCertification)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="certification-modal-action certification-modal-action-primary"
+                >
+                  Apri in nuova scheda
+                </a>
+                <a
+                  href={activeCertification.fileUrl}
+                  download
+                  className="certification-modal-action certification-modal-action-secondary"
+                >
+                  Scarica
+                </a>
+              </div>
+            )}
+          </motion.div>
+        </div>
+      )}
 
       {/* FOOTER */}
       <footer className="footer-block">
@@ -624,6 +786,153 @@ export default function Home() {
           background: radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.03) 0%, transparent 60%);
         }
 
+        .certifications-section {
+          background: radial-gradient(circle at 50% 20%, rgba(6, 182, 212, 0.03) 0%, transparent 58%);
+        }
+
+        .certifications-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+        }
+
+        .certification-card {
+          padding: 22px !important;
+          border-radius: 20px !important;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.86)) !important;
+          border: 1px solid var(--glass-border) !important;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          transition: var(--transition-smooth);
+        }
+
+        .dark .certification-card {
+          background: linear-gradient(180deg, rgba(11, 13, 22, 0.95), rgba(17, 20, 34, 0.9)) !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .certification-card:hover {
+          transform: translateY(-3px);
+          border-color: var(--glass-border-active) !important;
+          box-shadow: 0 14px 30px -12px rgba(6, 182, 212, 0.15);
+        }
+
+        .dark .certification-card:hover {
+          border-color: rgba(6, 182, 212, 0.28) !important;
+          box-shadow: 0 16px 32px -14px rgba(6, 182, 212, 0.18);
+        }
+
+        .certification-card-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        .certification-icon-wrap {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 12px;
+          border: 1px solid var(--glass-border);
+        }
+
+        .certification-status {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px 10px;
+          border-radius: 999px;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          color: var(--accent-cyan);
+          background: rgba(6, 182, 212, 0.08);
+          border: 1px solid rgba(6, 182, 212, 0.18);
+        }
+
+        .certification-view-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 10px;
+          border-radius: 999px;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          color: var(--accent-cyan);
+          background: rgba(6, 182, 212, 0.08);
+          border: 1px solid rgba(6, 182, 212, 0.18);
+          cursor: pointer;
+          transition: var(--transition-fast);
+          white-space: nowrap;
+        }
+
+        .certification-view-badge:hover {
+          transform: translateY(-1px);
+          background: rgba(6, 182, 212, 0.12);
+        }
+
+        .dark .certification-view-badge {
+          background: rgba(6, 182, 212, 0.12);
+          border-color: rgba(6, 182, 212, 0.22);
+        }
+
+        .dark .certification-view-badge:hover {
+          background: rgba(6, 182, 212, 0.18);
+        }
+
+        .certification-title {
+          font-size: 1.05rem;
+          font-weight: 700;
+          letter-spacing: -0.25px;
+          color: var(--text-primary);
+          line-height: 1.25;
+        }
+
+        .certification-meta {
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: var(--text-muted);
+        }
+
+        .certification-description {
+          font-size: 0.92rem;
+          line-height: 1.55;
+          color: var(--text-secondary);
+        }
+
+        .certification-empty {
+          padding: 28px !important;
+          border-radius: 20px !important;
+          border: 1px dashed var(--glass-border-active) !important;
+          background: rgba(255, 255, 255, 0.5) !important;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .dark .certification-empty {
+          background: rgba(11, 13, 22, 0.82) !important;
+          border-color: rgba(6, 182, 212, 0.24) !important;
+        }
+
+        .certification-empty-title {
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+
+        .certification-empty-text {
+          font-size: 0.92rem;
+          color: var(--text-secondary);
+          line-height: 1.55;
+          max-width: 720px;
+        }
+
         .coming-soon-card {
           border-radius: 24px !important;
           background: rgba(10, 10, 10, 0.6) !important;
@@ -663,6 +972,208 @@ export default function Home() {
           gap: 24px;
           position: relative;
           z-index: 1;
+        }
+
+        .certification-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 1200;
+          padding: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(3, 6, 15, 0.62);
+          backdrop-filter: blur(10px);
+        }
+
+        .certification-modal {
+          width: min(980px, 100%);
+          max-height: min(88vh, 980px);
+          padding: 22px !important;
+          border-radius: 24px !important;
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+          overflow: hidden;
+        }
+
+        .certification-modal-header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        .certification-modal-eyebrow {
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--accent-cyan);
+          margin-bottom: 6px;
+        }
+
+        .certification-modal-title {
+          font-size: clamp(1.2rem, 2vw, 1.8rem);
+          line-height: 1.1;
+          letter-spacing: -0.03em;
+          color: var(--text-primary);
+        }
+
+        .certification-modal-meta {
+          margin-top: 6px;
+          color: var(--text-secondary);
+          font-size: 0.9rem;
+        }
+
+        .certification-modal-close {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 12px;
+          border: 1px solid var(--glass-border);
+          background: var(--bg-tertiary);
+          color: var(--text-primary);
+          cursor: pointer;
+          transition: var(--transition-fast);
+          flex: 0 0 auto;
+        }
+
+        .certification-modal-close:hover {
+          border-color: var(--glass-border-active);
+          transform: translateY(-1px);
+        }
+
+        .certification-preview-frame {
+          width: 100%;
+          flex: 1 1 auto;
+          min-height: 0;
+          max-height: 68vh;
+          border-radius: 18px;
+          overflow: hidden;
+          border: 1px solid var(--glass-border);
+          background: rgba(255, 255, 255, 0.04);
+          display: flex;
+        }
+
+        .certification-preview-shell {
+          width: 100%;
+          flex: 1 1 auto;
+          min-height: 0;
+          max-height: 100%;
+          display: flex;
+          flex-direction: column;
+          overflow: auto;
+          padding: 12px;
+          box-sizing: border-box;
+        }
+
+        .certification-preview-image-shell {
+          width: 100%;
+          flex: 1 1 auto;
+          min-height: 0;
+          overflow: auto;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+        }
+
+        .certification-preview-pdf {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          align-items: center;
+        }
+
+        .certification-preview-canvas,
+        .certification-preview-image {
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          display: block;
+          background: #0b0d16;
+          border-radius: 14px;
+        }
+
+        .certification-preview-canvas {
+          max-width: 100%;
+        }
+
+        .certification-preview-loading,
+        .certification-preview-error {
+          margin-bottom: 12px;
+          font-size: 0.92rem;
+          color: var(--text-secondary);
+        }
+
+        .certification-preview-error {
+          color: #f59e0b;
+        }
+
+        .certification-preview-empty {
+          min-height: 42vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: var(--text-secondary);
+          padding: 24px;
+          border: 1px dashed var(--glass-border-active);
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        .certification-modal-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: flex-end;
+        }
+
+        .certification-modal-action {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 42px;
+          padding: 0 16px;
+          border-radius: 12px;
+          font-size: 0.9rem;
+          font-weight: 700;
+          text-decoration: none;
+          transition: var(--transition-fast);
+          border: 1px solid transparent;
+        }
+
+        .certification-modal-action:hover {
+          transform: translateY(-1px);
+        }
+
+        .certification-modal-action-primary {
+          color: #ffffff;
+          background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+        }
+
+        .certification-modal-action-secondary {
+          color: var(--text-primary);
+          background: var(--bg-tertiary);
+          border-color: var(--glass-border);
+        }
+
+        .dark .certification-modal-action-secondary {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .certification-modal {
+          background: linear-gradient(180deg, rgba(11, 13, 22, 0.98), rgba(17, 20, 34, 0.94)) !important;
+        }
+
+        .dark .certification-preview-frame,
+        .dark .certification-preview-empty {
+          background: rgba(11, 13, 22, 0.78);
         }
 
         .coming-soon-glow-icon {
