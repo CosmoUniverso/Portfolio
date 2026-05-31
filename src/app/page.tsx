@@ -607,14 +607,13 @@ export default function Home() {
 
             {activeCertification.fileUrl && (
               <div className="certification-modal-actions">
-                <a
-                  href={getCertificationPreviewUrl(activeCertification)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => window.open(getCertificationPreviewUrl(activeCertification), "_blank")}
                   className="certification-modal-action certification-modal-action-primary"
                 >
                   Apri in nuova scheda
-                </a>
+                </button>
                 <a
                   href={activeCertification.fileUrl}
                   download

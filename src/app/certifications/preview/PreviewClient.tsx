@@ -16,10 +16,26 @@ export default function PreviewClient({ fileUrl, title, issuer, year }: PreviewC
     <main className="cert-preview-page">
       <div className="cert-preview-shell">
         <div className="cert-preview-topbar">
-          <Link href="/#certifications" className="cert-preview-back">
+          <button
+            type="button"
+            className="cert-preview-back"
+            onClick={() => {
+              try {
+                if (typeof window !== "undefined" && window.opener && !window.opener.closed) {
+                  window.opener.focus();
+                  window.close();
+                  return;
+                }
+              } catch (err) {
+                // ignore and fallback
+              }
+
+              if (typeof window !== "undefined") window.history.back();
+            }}
+          >
             <ArrowLeft className="w-4 h-4" />
             <span>Indietro</span>
-          </Link>
+          </button>
           <div className="cert-preview-copy">
             <p className="cert-preview-eyebrow">Anteprima certificazione</p>
             <h1>{title}</h1>
