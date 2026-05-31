@@ -337,7 +337,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="coming-soon-card glass-panel"
+            className="section-content-carousel"
           >
             <Carousel projects={cybersecurityData.projects} />
           </motion.div>
