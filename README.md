@@ -59,43 +59,6 @@ Il sito web del portfolio è costruito con tecnologie d'avanguardia per garantir
 * **Icone:** [Lucide React](https://lucide.dev/)
 * **Gestione Stato & Interazioni:** React Hooks (`useState`, `useRef`, `useEffect`)
 
----
-
-## 💻 Sviluppo Locale
-
-Se desideri clonare il progetto ed eseguirlo sul tuo computer locale, segui questi passaggi:
-
-### 1. Prerequisiti
-Assicurati di aver installato [Node.js](https://nodejs.org/) (versione 18 o superiore consigliata) e `npm`.
-
-### 2. Installazione
-Clona la repository ed entra nella cartella di progetto:
-```bash
-git clone https://github.com/MPSup3r/Portfolio.git
-cd Portfolio
-```
-
-Installa tutte le dipendenze richieste:
-```bash
-npm install
-```
-
-### 3. Avviare il Server di Sviluppo
-Avvia il server di sviluppo locale:
-```bash
-npm run dev
-```
-Apri il tuo browser all'indirizzo [http://localhost:3000](http://localhost:3000) per vedere il portfolio in esecuzione con auto-reload istantaneo ad ogni modifica del codice.
-
-### 4. Build di Produzione
-Per creare un bundle ottimizzato pronto per la produzione:
-```bash
-npm run build
-npm run start
-```
-
----
-
 ## 📬 Contatti & Link Sociali
 
 Sei interessato al mio percorso o hai un'idea di sviluppo/multimediale da proporre? Non esitare a scrivermi!
