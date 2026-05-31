@@ -46,13 +46,20 @@ export default function SoftwareGrid({ softwareList, accentColor }: SoftwareGrid
 
       <div className="software-grid">
         {softwareList.map((tool, idx) => {
+          const tierClass = `tier-${tool.proficiency.toLowerCase()}`;
+          // Map proficiency to subtle visual intensity
+          const tierGlow = tool.proficiency === "S" ? `${accentColor}45` : tool.proficiency === "A" ? `${accentColor}30` : tool.proficiency === "B" ? `${accentColor}20` : `${accentColor}12`;
+          const tierFont = tool.proficiency === "S" ? "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue'" : "inherit";
+
           return (
             <div 
               key={idx} 
-              className="software-card glass-panel"
+              className={`software-card glass-panel ${tierClass}`}
               onMouseMove={handleMouseMove}
               style={{
-                "--hover-glow": `${accentColor}18`
+                "--hover-glow": `${accentColor}18`,
+                "--tier-glow": tierGlow,
+                "--tier-font": tierFont
               } as React.CSSProperties}
             >
               <div className="software-card-header">
@@ -65,6 +72,8 @@ export default function SoftwareGrid({ softwareList, accentColor }: SoftwareGrid
                 <h5 className="tool-name">{tool.name}</h5>
                 <span className="tool-category">{tool.category}</span>
               </div>
+              {/* Decorative particles for S tier (kept subtle and elegant) */}
+              {tool.proficiency === "S" && <div className="tier-s-particles" aria-hidden />}
             </div>
           );
         })}
@@ -188,6 +197,38 @@ export default function SoftwareGrid({ softwareList, accentColor }: SoftwareGrid
           color: var(--text-muted);
           font-weight: 500;
         }
+      `}</style>
+
+      <style jsx global>{`
+        /* CBAS tier styles */
+        .software-card.tier-c { transform: none; }
+        .software-card.tier-b { box-shadow: 0 8px 20px -8px var(--tier-glow, rgba(0,0,0,0.06)); }
+        .software-card.tier-a { box-shadow: 0 12px 28px -8px var(--tier-glow, rgba(0,0,0,0.08)); }
+        .software-card.tier-s { box-shadow: 0 18px 42px -12px var(--tier-glow, rgba(0,0,0,0.12)); transform: translateY(-2px); }
+
+        .software-card.tier-a .tool-name { font-weight: 700; }
+        .software-card.tier-s .tool-name { font-weight: 800; letter-spacing: -0.6px; }
+
+        .software-card.tier-s .software-icon-wrapper { transform: scale(1.08); box-shadow: 0 6px 28px -8px var(--tier-glow); }
+
+        .tier-s-particles {
+          pointer-events: none;
+          position: absolute;
+          inset: -10px;
+          background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.04) 0 2px, transparent 6px), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0 2px, transparent 8px);
+          mix-blend-mode: screen;
+          z-index: 0;
+          animation: subtle-pulse 3.6s ease-in-out infinite;
+        }
+
+        @keyframes subtle-pulse {
+          0% { opacity: 0.6; transform: translateY(0px) scale(1); }
+          50% { opacity: 0.9; transform: translateY(-2px) scale(1.02); }
+          100% { opacity: 0.6; transform: translateY(0px) scale(1); }
+        }
+
+        /* Respect the tier font variable where provided */
+        .software-card { font-family: var(--tier-font, inherit); }
       `}</style>
     </div>
   );

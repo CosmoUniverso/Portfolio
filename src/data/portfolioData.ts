@@ -85,6 +85,7 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "code",
         accentColor: "#06b6d4"
+        ,projectUrl: ""
       }
     ],
     software: [
@@ -166,6 +167,8 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "brain",
         accentColor: "#f59e0b"
+        ,
+        projectUrl: ""
       }
     ],
     software: [
@@ -199,6 +202,8 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "cpu",
         accentColor: "#06b6d4"
+        ,
+        projectUrl: ""
       },
       {
         id: "cyb-2",
@@ -214,6 +219,8 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "search",
         accentColor: "#ef4444"
+        ,
+        projectUrl: ""
       },
       {
         id: "cyb-3",
@@ -229,7 +236,8 @@ export const portfolioData: SectionData[] = [
         techStack: ["Linux", "SSH", "Docker", "Networking", "Server Admin"],
         year: "2025",
         iconName: "database",
-        accentColor: "#10b981"
+        accentColor: "#10b981",
+        projectUrl: ""
       }
     ],
     software: [
