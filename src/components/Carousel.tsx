@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Code, Cpu, Film, Tv, BarChart, Database, Mic, GitBranch, Search, Image as ImageIcon, Play, Calendar, CheckCircle2, ArrowRight, Sparkles, Brain } from "lucide-react";
+import { ChevronLeft, ChevronRight, Code, Cpu, Film, Tv, BarChart, Database, Mic, GitBranch, Search, Image as ImageIcon, Play, Calendar, CheckCircle2, ArrowRight, Sparkles, Brain, Shield } from "lucide-react";
 import { Project } from "@/data/portfolioData";
 
 interface CarouselProps {
@@ -75,6 +75,7 @@ export default function Carousel({ projects }: CarouselProps) {
       case "play": return <Play {...props} />;
       case "sparkles": return <Sparkles {...props} />;
       case "brain": return <Brain {...props} />;
+      case "shield": return <Shield {...props} />;
       default: return <Code {...props} />;
     }
   };

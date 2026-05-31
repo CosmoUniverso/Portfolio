@@ -15,6 +15,7 @@ export interface Project {
   | "sparkles"
   | "brain"
   | "film"
+  | "shield"
   | "camera"
   | "scissors"
   | "database"
@@ -85,7 +86,6 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "code",
         accentColor: "#06b6d4"
-        ,projectUrl: ""
       }
     ],
     software: [
@@ -167,8 +167,6 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "brain",
         accentColor: "#f59e0b"
-        ,
-        projectUrl: ""
       }
     ],
     software: [
@@ -202,8 +200,6 @@ export const portfolioData: SectionData[] = [
         year: "2026",
         iconName: "cpu",
         accentColor: "#06b6d4"
-        ,
-        projectUrl: ""
       },
       {
         id: "cyb-2",
@@ -217,10 +213,8 @@ export const portfolioData: SectionData[] = [
         ],
         techStack: ["Linux", "Wireshark", "Networking"],
         year: "2026",
-        iconName: "search",
+        iconName: "shield",
         accentColor: "#ef4444"
-        ,
-        projectUrl: ""
       },
       {
         id: "cyb-3",
@@ -237,16 +231,16 @@ export const portfolioData: SectionData[] = [
         year: "2025",
         iconName: "database",
         accentColor: "#10b981",
-        projectUrl: ""
+        projectUrl: undefined
       }
     ],
     software: [
       { name: "Linux", category: "OS", proficiency: "A", iconName: "terminal" },
       { name: "SSH", category: "Remote Access", proficiency: "A", iconName: "terminal" },
+      { name: "GitHub", category: "Collaboration", proficiency: "A", iconName: "git" },
       { name: "Wireshark", category: "Network Analysis", proficiency: "B", iconName: "search" },
       { name: "ESP32", category: "Embedded", proficiency: "B", iconName: "cpu" },
-      { name: "TCP/IP", category: "Networking", proficiency: "B", iconName: "cpu" },
-      { name: "GitHub", category: "Collaboration", proficiency: "A", iconName: "git" }
+      { name: "TCP/IP", category: "Networking", proficiency: "B", iconName: "cpu" }
     ]
   }
 ];

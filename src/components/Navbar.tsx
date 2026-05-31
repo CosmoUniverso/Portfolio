@@ -14,7 +14,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isCmdOpen, setIsCmdOpen] = useState(false);
 
   // Ascolta la scorciatoia globale ⌘K / Ctrl+K
@@ -29,19 +29,19 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Inizializza il tema da localStorage o imposta light come default, migrando vecchie impostazioni dark
+  // Inizializza il tema da localStorage o imposta dark come default
   useEffect(() => {
     const migrated = localStorage.getItem("theme_migrated_v2");
-    let initialTheme: "light" | "dark" = "light";
+    let initialTheme: "light" | "dark" = "dark";
     
     if (!migrated) {
-      // Forza il tema chiaro di default per questa nuova versione
-      localStorage.setItem("theme", "light");
+      // Forza il tema scuro di default per questa nuova versione
+      localStorage.setItem("theme", "dark");
       localStorage.setItem("theme_migrated_v2", "true");
-      initialTheme = "light";
+      initialTheme = "dark";
     } else {
       const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-      initialTheme = savedTheme || "light";
+      initialTheme = savedTheme || "dark";
     }
     
     setTheme(initialTheme);
