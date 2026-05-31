@@ -1,18 +1,17 @@
-# Manuel. — Portfolio (Capolavoro 2026)
+# Lorenzo Ebraico — Portfolio (Capolavoro 2026)
 
 <p align="center">
   <img src="public/next.svg" alt="Logo Next.js" width="120" style="margin: 20px 0;" />
 </p>
 
-<h3 align="center"><strong>"Costruisco il Futuro Digitale combinando Codice, IA e Design"</strong></h3>
+<h3 align="center"><strong>"Costruisco Sistemi Sicuri e Scalabili combinando Codice, IA e Cybersecurity"</strong></h3>
 
 <p align="center">
-  Un portfolio interattivo moderno, performante e ad alto impatto visivo. Progettato come <strong>Capolavoro 2026</strong>, questo spazio digitale illustra il mio percorso formativo e professionale attraverso lo sviluppo software, l'integrazione di sistemi di Intelligenza Artificiale e la produzione audiovisiva.
+  Un portfolio che racconta il lavoro pratico su backend robusti, integrazioni AI e infrastrutture self-hosted. Progettato come <strong>Capolavoro 2026</strong>, mostra progetti reali e sperimentazioni in ambito software, AI distribuita e cybersecurity.
 </p>
 
 <p align="center">
-  <a href="https://github.com/MPSup3r/Portfolio"><img src="https://img.shields.io/github/stars/MPSup3r/Portfolio?style=for-the-badge&color=2563eb" alt="GitHub Stars"></a>
-  <a href="https://github.com/MPSup3r/Portfolio/network/members"><img src="https://img.shields.io/github/forks/MPSup3r/Portfolio?style=for-the-badge&color=0891b2" alt="GitHub Forks"></a>
+  <a href="https://github.com/CosmoUniverso"><img src="https://img.shields.io/badge/GitHub-CosmoUniverso-222?style=for-the-badge&logo=github" alt="GitHub"></a>
   <img src="https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js" alt="Next.js">
   <img src="https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript" alt="TypeScript">
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=for-the-badge&logo=tailwind-css" alt="TailwindCSS">
@@ -22,48 +21,68 @@
 
 ## 🚀 Visione del Progetto
 
-Questo portfolio non è una semplice vetrina di progetti, ma un **ecosistema digitale** sviluppato per dimostrare come l'ingegneria del software classica possa fondersi sinergicamente con l'Intelligenza Artificiale generativa e la cura del design. L'interfaccia utente è caratterizzata da un'estetica premium: **sfondi dinamici grid-overlay, animazioni micro-interactive fluide** (grazie a Framer Motion) ed elementi in **glassmorphism** curati nei minimi dettagli.
+Questo portfolio è un laboratorio personale: non una vetrina estetica, ma un insieme di soluzioni tecniche che dimostrano come progettare e mantenere sistemi sicuri, scalabili e manutenibili. L'interfaccia mette in mostra architetture, automazioni e pratiche operative utili per progetti reali.
 
 ---
 
 ## 🌌 Le Tre Aree di Focus
 
-Il portfolio si articola in tre macro-sezioni distintive:
+Il portfolio si articola in tre macro-sezioni:
 
-### 1. 💻 Coding — *Sviluppo Software & Ingegneria Applicativa*
-Focus sulla progettazione di applicazioni desktop ad alte prestazioni, sistemi multi-threaded sicuri e interfacce grafiche native responsive.
-* **Progetti principali:**
-  * **Gioco 2D in Java:** Un Action-RPG indie sviluppato interamente in Java puro (Swing/AWT) senza motori esterni. Implementa un Game Loop asincrono a 60 FPS in multi-threading e algoritmi di intelligenza artificiale per il pathfinding dei nemici (A*). Coordinato in team autogestito tramite Notion.
-  * **Lezioni di Java & Swing GUI:** Un programma annuale di didattica applicata e peer-tutoring rivolto ai compagni di corso per approfondire la programmazione OOP e la gestione asincrona degli eventi.
+### 1. 💻 Coding — Software Development
+Focus su sviluppo applicativo e architetture backend modulari.
 
-### 2. 🤖 AI-Coding — *Automazione & Integrazione Generativa*
-Progettazione di sistemi avanzati di monitoraggio telemetrico ed ecosistemi IoT potenziati da modelli di linguaggio (LLM).
-* **Progetti principali:**
-  * **AutoStocker:** Robot mobile intelligente autoguidato per l'automazione e la logistica industriale sostenibile (Industria 5.0). Programmazione dei sistemi di locomozione a ruote sdoppiate, telemetria a bassa latenza e interfaccia web di monitoraggio Next.js/Three.js.
-  * **Ecosistema Vivo:** WebApp e chatbot AI ("Vivo AI") per il monitoraggio climatico e biometrico in tempo reale di un Populus Alba nel Parco Dini a Milano. Pipeline di dati sicura sviluppata su Supabase e relay server Node.js.
-  * **Lezioni di AI:** Workshop e tutoring incentrati su Prompt Engineering, integrazione delle API di Claude/Gemini nei flussi lavorativi e programmazione assistita con Cursor AI.
+### 2. 🤖 AI & Distributed Systems
+Progetti che integrano modelli linguistici, pipeline di automazione e backend real-time.
 
-### 3. 🎬 Photo & Video Editing — *Multimedia & Produzione Creativa*
-Post-produzione professionale, montaggio video cinematografico, color grading espressivo e motion graphics d'impatto (*Sezione in arrivo*).
+### 3. 🔐 Cybersecurity & Infrastructure
+Gestione di infrastrutture self-hosted, networking e laboratori di sicurezza.
 
 ---
 
 ## 🛠️ Stack Tecnologico
 
-Il sito web del portfolio è costruito con tecnologie d'avanguardia per garantire prestazioni eccezionali e fluidità:
+Principali tecnologie utilizzate:
 
-* **Framework:** [Next.js 16](https://nextjs.org/) (App Router & React 19)
-* **Linguaggio:** [TypeScript](https://www.typescriptlang.org/)
-* **Stile:** [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS custom (variabili HSL, sfocature di sfondo, glassmorphism)
-* **Animazioni:** [Framer Motion](https://www.framer.com/motion/) per transizioni d'ingresso fluide ed effetti hover reattivi
-* **Icone:** [Lucide React](https://lucide.dev/)
-* **Gestione Stato & Interazioni:** React Hooks (`useState`, `useRef`, `useEffect`)
+* **Framework:** Next.js (App Router)
+* **Linguaggio:** TypeScript
+* **Stile:** Tailwind CSS v4 + CSS personalizzato
+* **Animazioni:** Framer Motion
+* **Icone:** Lucide React
 
-## 📬 Contatti & Link Sociali
+---
 
-Sei interessato al mio percorso o hai un'idea di sviluppo/multimediale da proporre? Non esitare a scrivermi!
+## 📬 Contatti & Form di contatto
 
-* **Email:** [manuelprati08@gmail.com](mailto:manuelprati08@gmail.com)
-* **GitHub:** [@MPSup3r](https://github.com/MPSup3r)
-* **LinkedIn:** [Manuel Prati](https://www.linkedin.com/in/manuel-prati-3585613b2)
-* **Posizione:** Casorate Primo (PV), Italia
+Se vuoi contattarmi direttamente, puoi usare il form sul sito o scrivermi all'email indicata.
+
+* **Email:** lorenzo.ebraico@gmail.com
+* **GitHub:** https://github.com/CosmoUniverso
+* **LinkedIn:** https://www.linkedin.com/in/lorenzo-ebraico-bb85933b2/
+* **Posizione:** Milano, Italia
+
+Contact form notes:
+
+* The site sends form messages via Gmail SMTP (Nodemailer). Configure a `.env.local` file with:
+
+```
+GMAIL_USER=lorenzo.ebraico@gmail.com
+GMAIL_PASS=your_app_password_here
+```
+
+* The API adds an identifying header `X-Form-Origin: portfolio-contact-form` to messages sent via the site so you can filter them in your inbox.
+
+---
+
+## 🧰 Run locally
+
+Install dependencies and run the dev server:
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+If you want me to update any phrasing, add project screenshots or include CI/deployment notes (Vercel), tell me which parts to expand.
